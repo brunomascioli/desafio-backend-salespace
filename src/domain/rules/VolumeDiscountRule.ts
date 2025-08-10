@@ -1,9 +1,10 @@
+import type { OrderContext } from "../../application/contexts/OrderContext.js";
 import type { IDiscountRule } from "./IDiscountRule.js";
 
 export class VolumeDiscountRule implements IDiscountRule {
 
-    public apply(context: any): void {
-        const totalQuantity = context.items.reduce((sum: number, item: any) => sum + item.quantity, 0);
+    public apply(context: OrderContext): void {
+        const totalQuantity = context.getTotalQuantity();
 
         let discountPercentage = 0;
         let tierInfo = "";

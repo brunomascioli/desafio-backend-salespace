@@ -1,8 +1,9 @@
+import type { OrderContext } from "../../application/contexts/OrderContext.js";
 import type { IDiscountRule } from "./IDiscountRule.js";
 
 export class CartValueDiscountRule implements IDiscountRule{
 
-    public apply(context: any): void {
+    public apply(context: OrderContext): void {
         const basis = context.initialSubtotal;
         let fixedDiscount = 0;
         let tierInfo = "";
@@ -20,9 +21,6 @@ export class CartValueDiscountRule implements IDiscountRule{
 
             context.runningTotal -= discountAmount;
 
-            if (!context.appliedOrderDiscounts) {
-                context.appliedOrderDiscounts = [];
-            }
             context.appliedOrderDiscounts.push({
                 code: `CART_VALUE_FIXED_${fixedDiscount}`,
                 name: `Desconto de R$ ${fixedDiscount.toFixed(2)} por valor do carrinho`,
