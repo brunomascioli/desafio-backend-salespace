@@ -16,13 +16,13 @@ export class VolumeDiscountRule implements IDiscountRule {
             discountPercentage = 0.15;
             tierInfo = ">= 20 itens";
         } else if (totalQuantity >= 10) {
-            discountPercentage = 0.10; 
+            discountPercentage = 0.10;
             tierInfo = ">= 10 itens";
         }
 
         if (discountPercentage > 0) {
             const basis = context.runningTotal;
-            const discountAmount = basis * discountPercentage;
+            const discountAmount = Math.round(basis * discountPercentage);
 
             context.runningTotal -= discountAmount;
 

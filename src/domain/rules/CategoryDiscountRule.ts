@@ -1,5 +1,6 @@
-import type { ContextItem, OrderContext } from "../../application/contexts/OrderContext.js";
+import type { OrderContext } from "../../application/contexts/OrderContext.js";
 import { ProductCategory } from "../entities/Product.js";
+import type { ContextItem } from "../valueObjects/ContextItem.js";
 import type { IDiscountRule } from "./IDiscountRule.js";
 
 export class CategoryDiscountRule implements IDiscountRule {
@@ -19,7 +20,7 @@ export class CategoryDiscountRule implements IDiscountRule {
 
         if (totalQuantityOfCategory > this.MIN_QUANTITY) {
             for (const item of relevantItems) {
-                const discountAmount = item.subtotal * this.DISCOUNT_PERCENTAGE;
+                const discountAmount = Math.round(item.subtotal * this.DISCOUNT_PERCENTAGE);
 
                 item.total -= discountAmount;
 
