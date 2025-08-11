@@ -1,7 +1,6 @@
 import type { IProductRepository } from "../../domain/repositories/IProductRepository.js";
 import type { DiscountEngine } from "../../domain/services/DiscountEngine.js";
 import type { ContextItem } from "../../domain/valueObjects/ContextItem.js";
-import logger from "../../infra/lib/logger.js";
 import { OrderContext } from "../contexts/OrderContext.js";
 import type { OrderItemRequest } from "../dto/request/OrderItemRequest.js";
 import type { CalculatedOrderResponse } from "../dto/response/CalculatedOrderResponse.js";
@@ -50,22 +49,32 @@ export class OrderService {
         
         return this.mapContextToResponse(context);
     }
+
+    /**
+     * Converte um valor inteiro em centavos para um número decimal em reais.
+     * A função não aplica nenhuma lógica de negócio, apenas formata o valor.
+     */
+    private centsToReal(cents: number): number {
+        return Number((cents / 100).toFixed(2)); 
+    }
     
     private mapContextToResponse(context: OrderContext): CalculatedOrderResponse{
         return {
             currency: 'BRL',
+            subtotal: this.centsToReal(context.initialSubtotal),
             items: context.items.map(item => ({
                 productId: item.productId,
-                unitPrice: item.unitPrice,
+                unitPrice: this.centsToReal(item.unitPrice),
                 category: item.category,
                 quantity: item.quantity,
-                subtotal: parseFloat(item.subtotal.toFixed(2)),
-                appliedDiscounts: item.appliedDiscounts.map(d => ({...d, amount: parseFloat(d.amount.toFixed(2))})),
-                total: parseFloat(item.total.toFixed(2)),
+                subtotal: this.centsToReal(item.subtotal),
+                appliedDiscounts: item.appliedDiscounts.map(d => ({...d, basis: this.centsToReal(d.basis),
+                    amount: this.centsToReal(d.amount)})),
+                total: this.centsToReal(item.total),
             })),
-            discounts: context.appliedOrderDiscounts.map(d => ({...d, amount: parseFloat(d.amount.toFixed(2))})),
-            subtotal: parseFloat(context.initialSubtotal.toFixed(2)),
-            total: parseFloat(context.runningTotal.toFixed(2)),
+            discounts: context.appliedOrderDiscounts.map(d => ({...d, basis: this.centsToReal(d.basis), 
+                amount: this.centsToReal(d.amount)})),
+            total: this.centsToReal(context.runningTotal),
         };
     }
 }
