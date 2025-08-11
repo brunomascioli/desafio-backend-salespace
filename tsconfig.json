@@ -1,5 +1,5 @@
 {
-  "include": ["src", "tests"],
+  "include": ["src/**/*.ts"],
   "compilerOptions": {
     "outDir": "./dist",
     "module": "nodenext",
@@ -20,5 +20,6 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
+    "esModuleInterop": true,
   },
 }

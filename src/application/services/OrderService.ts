@@ -1,6 +1,7 @@
 import type { IProductRepository } from "../../domain/repositories/IProductRepository.js";
 import type { DiscountEngine } from "../../domain/services/DiscountEngine.js";
 import type { ContextItem } from "../../domain/valueObjects/ContextItem.js";
+import logger from "../../infra/lib/logger.js";
 import { OrderContext } from "../contexts/OrderContext.js";
 import type { OrderItemRequest } from "../dto/request/OrderItemRequest.js";
 import type { CalculatedOrderResponse } from "../dto/response/CalculatedOrderResponse.js";
