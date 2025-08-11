@@ -1,5 +1,7 @@
 export enum ProductCategory {
-    ACESSORIOS = "acessorios"
+    ACESSORIOS = "acessorios",
+    ELETRONICOS = "eletronicos",
+    LIVROS = "livros"
 }
 
 export class Product {
