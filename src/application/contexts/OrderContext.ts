@@ -1,22 +1,5 @@
-import type { ProductCategory } from "../../domain/entities/Product.js";
-
-export interface AppliedDiscount {
-    readonly code: string;
-    readonly name: string;
-    readonly basis: number;
-    readonly amount: number;
-    readonly metadata?: Record<string, any>;
-}
-
-export interface ContextItem {
-    readonly productId: string;
-    readonly category: ProductCategory; 
-    readonly unitPrice: number;
-    readonly quantity: number;
-    readonly subtotal: number;
-    total: number;
-    appliedDiscounts: AppliedDiscount[];
-}
+import type { AppliedDiscount } from "../../domain/valueObjects/AppliedDiscount.js";
+import type { ContextItem } from "../../domain/valueObjects/ContextItem.js";
 
 export class OrderContext {
     public readonly items: ContextItem[];
