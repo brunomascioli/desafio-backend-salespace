@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ele-001",
+    "name": "ele-001",
+    "unitPrice": 79.90,
+    "category": "eletronicos"
+  },
+  {
+    "id": "ele-002",
+    "name": "ele-002",
+    "unitPrice": 199.90,
+    "category": "eletronicos"
+  },
+  {
+    "id": "acc-001",
+    "name": "acc-001",
+    "unitPrice": 39.90,
+    "category": "acessorios"
+  },
+  {
+    "id": "acc-002",
+    "name": "acc-002",
+    "unitPrice": 19.90,
+    "category": "acessorios"
+  },
+  {
+    "id": "liv-001",
+    "name": "liv-001",
+    "unitPrice": 89.90,
+    "category": "livros"
+  }
+]
