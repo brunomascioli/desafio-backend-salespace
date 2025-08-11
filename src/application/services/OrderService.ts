@@ -5,6 +5,7 @@ import logger from "../../infra/lib/logger.js";
 import { OrderContext } from "../contexts/OrderContext.js";
 import type { OrderItemRequest } from "../dto/request/OrderItemRequest.js";
 import type { CalculatedOrderResponse } from "../dto/response/CalculatedOrderResponse.js";
+import { NotFoundError } from "../errors/AppError.js";
 
 export class OrderService {
     
@@ -20,7 +21,7 @@ export class OrderService {
         if (products.length !== requestItems.length) {
             const foundIds = products.map(p => p.id);
             const notFoundIds = productIds.filter(id => !foundIds.includes(id));
-            throw new Error(`Os seguintes produtos não foram encontrados: ${notFoundIds.join(', ')}`);
+            throw new NotFoundError(`Os seguintes produtos não foram encontrados: ${notFoundIds.join(', ')}`);
         }
 
         const productMap = new Map(products.map(p => [p.id, p]));
@@ -28,7 +29,7 @@ export class OrderService {
         const contextItems: ContextItem[] = requestItems.map(itemReq => {
             const product = productMap.get(itemReq.productId);
             if (!product) {
-                throw new Error(`Produto com ID ${itemReq.productId} não encontrado.`);
+                throw new NotFoundError(`Produto com ID ${itemReq.productId} não encontrado.`);
             }
             const subtotal = product.unitPrice * itemReq.quantity;
 

@@ -21,6 +21,7 @@ export class OrderController {
 
             return res.status(200).json(calculateOrder);
         } catch(err) {
+            logger.error("[OrderController] Erro ao calcular pedido", err);
             return next(err);
         }
     }
